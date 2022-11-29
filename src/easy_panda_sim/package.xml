@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>easy_panda_sim</name>
+  <version>0.0.0</version>
+  <description>A package for panda simulation</description>
+
+  <maintainer email="nicola.piga@iit.it">Nicola Piga</maintainer>
+  <license>LGPLv2</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+</package>

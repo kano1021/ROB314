@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+    <!-- Arguments for Gazebo -->
+    <arg name="paused" default="true"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+
+    <!-- Arguments for depth camera (defaulting to a RealSense D415-like camera) -->
+    <arg name="enable_rgbd_camera" default="false"/>
+
+    <!--Launch Gazebo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      	<arg name="debug" value="$(arg debug)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>
+        <arg name="verbose" value="true"/>
+    </include>
+
+    <!-- Load controller parameters to rosparam -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find easy_panda_sim)/robots/panda_arm_world.urdf.xacro' enable_rgbd_camera:=$(arg enable_rgbd_camera)" />
+
+    <rosparam file="$(find easy_panda_sim)/config/panda_control.yaml" command="load"/>
+
+    <!-- Spawn robot in the world -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -unpause -model robot_description -J robot_description::panda_joint1 0 -J robot_description::panda_joint2 0 -J robot_description::panda_joint3 0 -J robot_description::panda_joint4 -1.15 -J robot_description::panda_joint5 0 -J robot_description::panda_joint6 1.45 -J robot_description::panda_joint7 0.9"/>
+
+    <!-- Spawn state publisher and joint trajectory generator for arm -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller position_joint_trajectory_controller"/>
+
+    <!-- Spawn simulation of franka gripper -->
+    <include file="$(find franka_gripper_sim)/launch/franka_gripper_sim.launch"/>
+
+    <!-- Convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+</launch>
