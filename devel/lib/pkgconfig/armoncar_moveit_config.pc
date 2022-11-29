@@ -1,4 +1,4 @@
-prefix=/home/xinyi/carwitharm/devel
+prefix=/home/xinyi/myrobot/devel
 
 Name: armoncar_moveit_config
 Description: Description of armoncar_moveit_config

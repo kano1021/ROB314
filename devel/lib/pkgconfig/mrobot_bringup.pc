@@ -1,8 +1,8 @@
-prefix=/home/xinyi/carwitharm/devel
+prefix=/home/xinyi/myrobot/devel
 
 Name: mrobot_bringup
 Description: Description of mrobot_bringup
 Version: 0.0.0
-Cflags: -I/home/xinyi/carwitharm/src/mrobot_bringup/include
+Cflags: -I/home/xinyi/myrobot/src/mrobot_bringup/include
 Libs: -L${prefix}/lib 
 Requires: 
