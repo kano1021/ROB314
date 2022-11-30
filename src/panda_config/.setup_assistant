@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: armoncar_package
+    relative_path: urdf/mrobot_with_arm_and_laser.urdf.xacro
+    xacro_args: enable_rgbd_camera:=true
+  SRDF:
+    relative_path: config/panda_on_car.srdf
+  CONFIG:
+    author_name: Xinyi DAI
+    author_email: xinyi.dai@polytechnique.edu
+    generated_timestamp: 1669778156

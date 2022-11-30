@@ -19,10 +19,18 @@ catkin_package(CATKIN_DEPENDS message_runtime)
 # Specify locations of header files.
 include_directories(include ${catkin_INCLUDE_DIRS})
 
+add_library(server_shared SHARED blocks_poses_publisher.cpp)
+add_dependencies(server_shared ${server_shared_EXPORTTED_TARGETS} ${catkin_EXPORTED_TARGETS} server_shared_generate_messages_cpp)
+
 # Declare the executable, along with its source files.
-add_executable(blocks_spawner blocks_spawner.cpp)
 add_executable(blocks_poses_publisher blocks_poses_publisher.cpp)
 
+add_dependencies(blocks_poses_publisher ${server_shared_EXPORTTED_TARGETS} 
+                                ${catkin_EXPORTED_TARGETS}
+                                server_shared_generate_messages_cpp
+                                server_shared_gencpp)
+target_link_libraries(blocks_poses_publisher server_shared ${catkin_LIBRARIES})
+
+add_executable(blocks_spawner blocks_spawner.cpp)
 # Specify libraries against which to link.
 target_link_libraries(blocks_spawner ${catkin_LIBRARIES})
-target_link_libraries(blocks_poses_publisher ${catkin_LIBRARIES})

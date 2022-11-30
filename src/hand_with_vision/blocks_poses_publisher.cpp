@@ -11,7 +11,7 @@
 #include <string>
 #include <std_msgs/Int8MultiArray.h>
 #include <gazebo_msgs/ModelStates.h>
-#include <blocks_pose.h>
+#include <hand_with_vision/blocks_poses.h>
 
 // global variables
 int g_quantity;
@@ -110,8 +110,8 @@ int main(int argc, char** argv) {
     ros::Subscriber model_states_subscriber = nh.subscribe("/gazebo/model_states", 1, modelStatesCallback);
     // initialize publisher for "/cylinder_blocks_poses"
     ros::Publisher poses_publisher
-        = nh.advertise<ur5_notebook::blocks_poses>("blocks_poses", 1);
-    ur5_notebook::blocks_poses current_poses_msg;
+        = nh.advertise<hand_with_vision::blocks_poses>("blocks_poses", 1);
+    hand_with_vision::blocks_poses current_poses_msg;
 
     // publishing loop
     while (ros::ok()) {

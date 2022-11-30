@@ -1,8 +1,0 @@
-prefix=/home/xinyi/myrobot/devel
-
-Name: object_recognition_msgs
-Description: Description of object_recognition_msgs
-Version: 0.4.1
-Cflags: -I/home/xinyi/myrobot/devel/include
-Libs: -L${prefix}/lib 
-Requires: actionlib_msgs geometry_msgs sensor_msgs shape_msgs std_msgs
