@@ -1,1 +1,0 @@
-/home/xinyi/ROB/ROB314/devel/.private/armoncar_package/lib/pkgconfig/armoncar_package.pc
