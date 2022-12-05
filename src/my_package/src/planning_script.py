@@ -28,7 +28,7 @@ group = moveit_commander.MoveGroupCommander(group_name)
 
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
                                                    moveit_msgs.msg.DisplayTrajectory,
-                                                   queue_size=1)
+                                                   queue_size=20)
 
 def go_to_pose(robot, group, pose, i):
     rospy.loginfo("Go to pose " + str(i + 1))

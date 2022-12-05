@@ -14,16 +14,18 @@
     <arg name="world_name" default="worlds/empty.world"/>
     <arg name="paused" value="$(arg paused)"/>
     <arg name="gui" value="$(arg gazebo_gui)"/>
+    <arg name="use_sim_time" value="$(arg sim)"/>
   </include>
 
   <!-- send robot urdf to param server -->
   <param name="robot_description" textfile="$(arg urdf_path)" />
 
   <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
-  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x 0 -z 0.2 -y 0.7"
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x 0 -z 0 -y 0.7"
     respawn="false" output="screen" />
 
   <include file="$(find panda_config)/launch/ros_controllers.launch"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
 
   <!-- Remap follow_joint_trajectory -->
   <remap if="$(arg sim)" from="/follow_joint_trajectory" to="/arm_controller/follow_joint_trajectory"/>
@@ -32,6 +34,9 @@
   <include file="$(find panda_config)/launch/move_group.launch">
     <arg name="debug" default="$(arg debug)" />
   </include>
+
+  <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired"/>
+
   <!-- spawn the conveyor_belt in gazebo -->
   <node name="spawn_conveyor_belt" pkg="gazebo_ros" type="spawn_model" args="-file $(find hand_with_vision)/urdf/conveyor_belt.urdf -urdf -model conveyor_belt" />
   <!-- spawn the conveyor_belt in gazebo -->
@@ -44,16 +49,7 @@
   <node name="blocks_poses_publisher" pkg="hand_with_vision" type="blocks_poses_publisher" output="screen" />
 
   <!-- the cylinder poses publisher node -->
-  <node name="ur5_vision" pkg="hand_with_vision" type="ur5_vision.py" output="screen" />
-  <node name="ur5_mp" pkg="hand_with_vision" type="ur5_mp.py" output="screen" />
-  <node name="ur5_gripper" pkg="hand_with_vision" type="ur5_gripper.py" output="screen"/>
-  
-  
-  <!-- for ros control to be used with scara robot -->
-<!--   <param name="/scara_robot_left/robot_description" textfile="$(find two_scara_collaboration)/urdf/scara_robot_left.urdf" /> -->
-
-<!-- spawn the red_box in gazebo -->
-<!-- node name="spawn_red_box" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur5_notebook)/urdf/red_box.urdf -urdf -model red_box"/ -->
-
+  <node name="vision" pkg="hand_with_vision" type="vision.py" output="screen" />
+  <node name="move_arm" pkg="hand_with_vision" type="move_arm.py" output="screen" />
 
 </launch>

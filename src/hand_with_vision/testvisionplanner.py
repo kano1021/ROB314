@@ -56,7 +56,7 @@ class MoveItCartesianPath:
         end_effector_link = self.arm.get_end_effector_link()
 
         # Set the reference frame for pose targets
-        reference_frame = "panda_link0"
+        reference_frame = "base_link"
 
         # Set the ur5_arm reference frame accordingly
         self.arm.set_pose_reference_frame(reference_frame)

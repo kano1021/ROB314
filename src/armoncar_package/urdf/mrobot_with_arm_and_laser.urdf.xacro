@@ -54,6 +54,8 @@
     <!-- arm -->
 
   <xacro:include filename="$(find easy_panda_sim)/robots/panda_arm.xacro"/>
+  <xacro:include filename="$(find armoncar_package)/urdf/panda.control.xacro"/>
+  <xacro:panda_control arm_id="panda"/>
   <xacro:panda_arm />
 
   <!-- gripper -->
