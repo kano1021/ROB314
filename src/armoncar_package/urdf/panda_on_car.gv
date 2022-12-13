@@ -2,11 +2,9 @@ digraph G {
 node [shape=box];
 "base_footprint" [label="base_footprint"];
 "base_link" [label="base_link"];
-"left_motor" [label="left_motor"];
-"left_wheel_link" [label="left_wheel_link"];
-"right_motor" [label="right_motor"];
-"right_wheel_link" [label="right_wheel_link"];
 "front_caster_link" [label="front_caster_link"];
+"wheel_left_link" [label="wheel_left_link"];
+"wheel_right_link" [label="wheel_right_link"];
 "plate_1_link" [label="plate_1_link"];
 "plate_2_link" [label="plate_2_link"];
 "panda_link0" [label="panda_link0"];
@@ -21,10 +19,19 @@ node [shape=box];
 "panda_hand" [label="panda_hand"];
 "panda_leftfinger" [label="panda_leftfinger"];
 "panda_rightfinger" [label="panda_rightfinger"];
+"panda_hand_sc" [label="panda_hand_sc"];
+"panda_hand_tcp" [label="panda_hand_tcp"];
 "panda_rgbd" [label="panda_rgbd"];
 "camera_color_optical_frame" [label="camera_color_optical_frame"];
 "panda_rgb_gazebo" [label="panda_rgb_gazebo"];
-"panda_tcp" [label="panda_tcp"];
+"panda_link7_sc" [label="panda_link7_sc"];
+"panda_link6_sc" [label="panda_link6_sc"];
+"panda_link5_sc" [label="panda_link5_sc"];
+"panda_link4_sc" [label="panda_link4_sc"];
+"panda_link3_sc" [label="panda_link3_sc"];
+"panda_link2_sc" [label="panda_link2_sc"];
+"panda_link1_sc" [label="panda_link1_sc"];
+"panda_link0_sc" [label="panda_link0_sc"];
 "laser_link" [label="laser_link"];
 "standoff_2in_1_link" [label="standoff_2in_1_link"];
 "standoff_2in_5_link" [label="standoff_2in_5_link"];
@@ -37,22 +44,18 @@ node [shape=box];
 node [shape=ellipse, color=blue, fontcolor=blue];
 "base_footprint" -> "base_footprint_joint" [label="xyz: 0 0 0.033 \nrpy: 0 -0 0"]
 "base_footprint_joint" -> "base_link"
-"base_link" -> "base_left_motor_joint" [label="xyz: -0.055 0.075 0 \nrpy: 0 -0 0"]
-"base_left_motor_joint" -> "left_motor"
-"left_motor" -> "left_wheel_joint" [label="xyz: 0 0.0485 0 \nrpy: 0 -0 0"]
-"left_wheel_joint" -> "left_wheel_link"
-"base_link" -> "base_right_motor_joint" [label="xyz: -0.055 -0.075 0 \nrpy: 0 -0 0"]
-"base_right_motor_joint" -> "right_motor"
-"right_motor" -> "right_wheel_joint" [label="xyz: 0 -0.0485 0 \nrpy: 0 -0 0"]
-"right_wheel_joint" -> "right_wheel_link"
-"base_link" -> "front_caster_joint" [label="xyz: 0.1135 0 -0.0165 \nrpy: 0 -0 0"]
-"front_caster_joint" -> "front_caster_link"
+"base_link" -> "base_to_front_caster_joint" [label="xyz: 0.12 0 -0.016 \nrpy: 0 -0 0"]
+"base_to_front_caster_joint" -> "front_caster_link"
+"base_link" -> "base_to_wheel_left_joint" [label="xyz: -0.05 -0.13 0 \nrpy: 0 -0 0"]
+"base_to_wheel_left_joint" -> "wheel_left_link"
+"base_link" -> "base_to_wheel_right_joint" [label="xyz: -0.05 0.13 0 \nrpy: 0 -0 0"]
+"base_to_wheel_right_joint" -> "wheel_right_link"
 "base_link" -> "plate_1_joint" [label="xyz: 0 0 0.07 \nrpy: 0 -0 0"]
 "plate_1_joint" -> "plate_1_link"
 "plate_1_link" -> "plate_2_joint" [label="xyz: 0 0 0.07 \nrpy: 0 -0 0"]
 "plate_2_joint" -> "plate_2_link"
-"plate_2_link" -> "robot_to_world" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
-"robot_to_world" -> "panda_link0"
+"plate_2_link" -> "panda_joint_plate_2_link" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_joint_plate_2_link" -> "panda_link0"
 "panda_link0" -> "panda_joint1" [label="xyz: 0 0 0.333 \nrpy: 0 -0 0"]
 "panda_joint1" -> "panda_link1"
 "panda_link1" -> "panda_joint2" [label="xyz: 0 0 0 \nrpy: -1.5708 0 0"]
@@ -75,14 +78,32 @@ node [shape=ellipse, color=blue, fontcolor=blue];
 "panda_finger_joint1" -> "panda_leftfinger"
 "panda_hand" -> "panda_finger_joint2" [label="xyz: 0 0 0.0584 \nrpy: 0 -0 0"]
 "panda_finger_joint2" -> "panda_rightfinger"
+"panda_hand" -> "panda_hand_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_hand_sc_joint" -> "panda_hand_sc"
+"panda_hand" -> "panda_hand_tcp_joint" [label="xyz: 0 0 0.1034 \nrpy: 0 -0 0"]
+"panda_hand_tcp_joint" -> "panda_hand_tcp"
 "panda_hand" -> "panda_rgbd_joint" [label="xyz: 0.0565 0 0.0425 \nrpy: 0 0 -1.5708"]
 "panda_rgbd_joint" -> "panda_rgbd"
 "panda_rgbd" -> "panda_rgb_joint" [label="xyz: 0.035 0 0 \nrpy: 0 -0 3.14"]
 "panda_rgb_joint" -> "camera_color_optical_frame"
 "camera_color_optical_frame" -> "panda_rgb_gazebo_joint" [label="xyz: 0 0 0 \nrpy: 0 -1.5708 1.5708"]
 "panda_rgb_gazebo_joint" -> "panda_rgb_gazebo"
-"panda_hand" -> "panda_tcp_joint" [label="xyz: 0 0 0.12 \nrpy: 0 -0 0"]
-"panda_tcp_joint" -> "panda_tcp"
+"panda_link7" -> "panda_link7_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0.785398"]
+"panda_link7_sc_joint" -> "panda_link7_sc"
+"panda_link6" -> "panda_link6_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_link6_sc_joint" -> "panda_link6_sc"
+"panda_link5" -> "panda_link5_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_link5_sc_joint" -> "panda_link5_sc"
+"panda_link4" -> "panda_link4_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_link4_sc_joint" -> "panda_link4_sc"
+"panda_link3" -> "panda_link3_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_link3_sc_joint" -> "panda_link3_sc"
+"panda_link2" -> "panda_link2_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_link2_sc_joint" -> "panda_link2_sc"
+"panda_link1" -> "panda_link1_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_link1_sc_joint" -> "panda_link1_sc"
+"panda_link0" -> "panda_link0_sc_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"panda_link0_sc_joint" -> "panda_link0_sc"
 "plate_1_link" -> "rplidar_joint" [label="xyz: 0 0 0.028 \nrpy: 0 -0 0"]
 "rplidar_joint" -> "laser_link"
 "base_link" -> "standoff_2in_1_joint" [label="xyz: -0.09 -0.07 0.035 \nrpy: 0 -0 0"]

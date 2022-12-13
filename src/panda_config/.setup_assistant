@@ -6,6 +6,6 @@ moveit_setup_assistant_config:
   SRDF:
     relative_path: config/panda_on_car.srdf
   CONFIG:
-    author_name: Xinyi DAI
+    author_name: xinyi dai
     author_email: xinyi.dai@polytechnique.edu
-    generated_timestamp: 1670210055
+    generated_timestamp: 1670931209
